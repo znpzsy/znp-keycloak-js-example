@@ -1,8 +1,14 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Initialize Keycloak
+    /*// Initialize Keycloak
     const keycloak = new Keycloak({
         url: 'http://localhost:8080',
         realm: 'master',
+        clientId: 'js-client'
+    });*/
+    // Initialize Keycloak
+    const keycloak = new Keycloak({
+        url: 'http://localhost:8080',
+        realm: 'znp-realm',
         clientId: 'js-client'
     });
 
@@ -58,6 +64,31 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
+        document.getElementById('queryUserInfoBtn').addEventListener('click', function() {
+            if (keycloak.authenticated) {
+                const parsedToken = keycloak.tokenParsed;
+                logToTextarea('Query User Info button clicked: ' + JSON.stringify(parsedToken, null, 2));
+
+
+                fetch('http://localhost:8080/realms/znp-realm/protocol/openid-connect/userinfo', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + keycloak.token
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('User Info:', data);
+                        logToTextarea('API call successful: ' + JSON.stringify(data));
+                        alert('User Info: ' + JSON.stringify(data, null, 2));
+                });
+            } else {
+                const notLoggedInMessage = 'User is not logged in';
+                logToTextarea('Query User Info button clicked: ' + notLoggedInMessage);
+                alert(notLoggedInMessage);
+            }
+        });
+
         document.getElementById('callApiBtn').addEventListener('click', function() {
             logToTextarea('Call API button clicked');
             if (keycloak.authenticated) {
@@ -81,7 +112,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 alert(notLoggedInMessage);
             }
         });
-
 
 
     }).catch(function() {

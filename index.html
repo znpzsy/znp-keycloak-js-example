@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Static Web App</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <!--<script src="https://cdn.jsdelivr.net/npm/keycloak-js@22.0.3/dist/keycloak.min.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/keycloak-js@25.0.6/dist/keycloak.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="./main.js"></script>
 </head>
 <body>
@@ -18,12 +20,17 @@
             <h1 class="display-4">Keycloak - Javascript Integration</h1>
             <p class="lead">A pure javascript web app</p>
             <div class="mt-4">
-                <button id="loginBtn" class="btn btn-primary">Login</button>
-                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
-                <button id="isLoggedInBtn" class="btn btn-info">Is Logged In</button>
-                <button id="accessTokenBtn" class="btn btn-warning">Access Token</button>
-                <button id="showParsedTokenBtn" class="btn btn-dark">Show Parsed Access Token</button>
-                <button id="callApiBtn" class="btn btn-success">Call API</button>
+                <div class="row">
+                    <button id="loginBtn" class="btn btn-primary">Login</button>
+                    <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+                    <button id="isLoggedInBtn" class="btn btn-info">Is Logged In</button>
+                    <button id="accessTokenBtn" class="btn btn-warning">Access Token</button>
+                    <button id="showParsedTokenBtn" class="btn btn-dark">Show Parsed Access Token</button>
+                    <button id="queryUserInfoBtn" class="btn btn-danger">Query User Info</button>
+                    <button id="callApiBtn" class="btn btn-success">Call API</button>
+                </div>
+                <div class="row">
+                </div>
             </div>
             <div class="mt-4">
                 <textarea id="output" class="form-control" rows="5" placeholder="Output will be displayed here..."></textarea>
