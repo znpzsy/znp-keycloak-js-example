@@ -20,6 +20,15 @@ document.addEventListener("DOMContentLoaded", function() {
         outputTextarea.value += `[${timestamp}] ${message}\n`;
     }
 
+    function showModal(title, message) {
+        document.getElementById('feedbackModalLabel').textContent = title;
+        document.getElementById('feedbackModalBody').textContent = message;
+
+        const modal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+        modal.show();
+    }
+
+
     keycloak.init({ 
         onLoad: 'check-sso' 
     }).then(function(authenticated) {
@@ -38,13 +47,15 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('isLoggedInBtn').addEventListener('click', function() {
             const isLoggedInMessage = keycloak.authenticated ? 'User is logged in' : 'User is not logged in';
             logToTextarea('Is Logged In button clicked: ' + isLoggedInMessage);
-            alert(isLoggedInMessage);
+            //alert(isLoggedInMessage);
+            showModal('Login Status', isLoggedInMessage);
         });
 
         document.getElementById('accessTokenBtn').addEventListener('click', function() {
             if (keycloak.authenticated) {
                 logToTextarea('Access Token button clicked: ' + keycloak.token);
-                alert('Access Token: ' + keycloak.token);
+                //alert('Access Token: ' + keycloak.token);
+                showModal('Access Token', keycloak.token);
             } else {
                 const notLoggedInMessage = 'User is not logged in';
                 logToTextarea('Access Token button clicked: ' + notLoggedInMessage);
@@ -56,11 +67,13 @@ document.addEventListener("DOMContentLoaded", function() {
             if (keycloak.authenticated) {
                 const parsedToken = keycloak.tokenParsed;
                 logToTextarea('Show Parsed Access Token button clicked: ' + JSON.stringify(parsedToken, null, 2));
-                alert('Parsed Access Token: ' + JSON.stringify(parsedToken, null, 2));
+                //'Parsed Access Token: ' + JSON.stringify(parsedToken, null, 2));
+                showModal('Parsed Access Token', JSON.stringify(parsedToken, null, 2));
             } else {
                 const notLoggedInMessage = 'User is not logged in';
                 logToTextarea('Show Parsed Access Token button clicked: ' + notLoggedInMessage);
-                alert(notLoggedInMessage);
+                //alert(notLoggedInMessage);
+                showModal('Login Status', notLoggedInMessage);
             }
         });
 
@@ -80,12 +93,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     .then(data => {
                         console.log('User Info:', data);
                         logToTextarea('API call successful: ' + JSON.stringify(data));
-                        alert('User Info: ' + JSON.stringify(data, null, 2));
+                        //alert('User Info: ' + JSON.stringify(data, null, 2));
+                        showModal('User Info', JSON.stringify(data, null, 2));
                 });
             } else {
                 const notLoggedInMessage = 'User is not logged in';
                 logToTextarea('Query User Info button clicked: ' + notLoggedInMessage);
-                alert(notLoggedInMessage);
+                //alert(notLoggedInMessage);
+                showModal('Login Status', notLoggedInMessage);
             }
         });
 
@@ -109,7 +124,8 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 const notLoggedInMessage = 'User is not logged in';
                 logToTextarea('API call failed: ' + notLoggedInMessage);
-                alert(notLoggedInMessage);
+                //alert(notLoggedInMessage);
+                showModal('Login Status', notLoggedInMessage);
             }
         });
 
