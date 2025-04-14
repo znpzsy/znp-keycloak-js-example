@@ -22,11 +22,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function showModal(title, message) {
         document.getElementById('feedbackModalLabel').textContent = title;
-        document.getElementById('feedbackModalBody').textContent = message;
+
+        const body = document.getElementById('feedbackModalBody');
+        body.textContent = message;  // Keeps <pre> formatting safe
 
         const modal = new bootstrap.Modal(document.getElementById('feedbackModal'));
         modal.show();
     }
+
 
 
     keycloak.init({ 
@@ -59,7 +62,8 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 const notLoggedInMessage = 'User is not logged in';
                 logToTextarea('Access Token button clicked: ' + notLoggedInMessage);
-                alert(notLoggedInMessage);
+                //alert(notLoggedInMessage);
+                showModal('Login Status', notLoggedInMessage);
             }
         });
 
@@ -115,10 +119,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(response => response.json())
                 .then(data => {
                     logToTextarea('API call successful: ' + JSON.stringify(data));
+                    showModal('API call successful. Response:', JSON.stringify(data));
                     console.log(data);
                 })
                 .catch(error => {
                     logToTextarea('API call failed: ' + error);
+                    showModal('API call failed. Error:', JSON.stringify(error));
                     console.error('Error:', error);
                 });
             } else {
